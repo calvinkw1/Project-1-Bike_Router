@@ -11,18 +11,24 @@
 </head>
 <body>
 	<h1 class="appName">Bike Router</h1>
-
-	<div class="mainBox">
-		<div id="map-canvas"></div>
-
-		<div class="getStarted">
-			<h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fuga quisquam nemo odio dolorem soluta architecto, cupiditate doloremque minus, iusto optio eaque error, et ut suscipit perferendis veniam laboriosam adipisci.</h3>
 	
-			<br>
-			<br>
+	<form action="javascript:void(0);">
+		<label for="addyBox"></label>
+		<input type="text" id="addyBox" placeholder="Enter start location here">
+		<input type="submit" value="Get location">
+	</form>
+	<div class="mainBox">
+		<div id="map-canvas">
+				<div class="getStarted">
+				<h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fuga quisquam nemo odio dolorem soluta architecto, cupiditate doloremque minus, iusto optio eaque error, et ut suscipit perferendis veniam laboriosam adipisci.</h3>
+	
+				<br>
+				<br>
 			
-			<button type="button" class="btn btn-primary btn-lg btn-block">Get Started!</button>
-		</div>	
+				<button type="button" class="btn btn-primary btn-lg btn-block">Get Started!</button>
+			</div>
+		</div>
+
 	</div>
 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE6F79FbnrSc9hZlurECTyBJoEyHCj-Nc"></script>

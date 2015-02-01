@@ -14,24 +14,23 @@
 	font-size: 12px;
 }
 
-.start {
-	margin: 0 auto;
-}
 
 body {
 	background-image: url(city-bike.jpg);
 	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 /* This should go over the map, currently not working.. window.onload issue? */
 .getStarted {
 	position: absolute;
-	height: inherit;
-	width: inherit;
-	z-index: 10;
+	height: 90%;
+	width: 90%;
 }
 
 #map-canvas {
 	width: 100%;
 	height: 100%;
+	position: relative;
+	z-index: 1;
 }
