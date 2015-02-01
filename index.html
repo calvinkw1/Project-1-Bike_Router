@@ -12,22 +12,28 @@
 <body>
 	<h1 class="appName">Bike Router</h1>
 	
-	<form action="javascript:void(0);">
-		<label for="addyBox"></label>
-		<input type="text" id="addyBox" placeholder="Enter start location here">
-		<input type="submit" value="Get location">
-	</form>
+	<div class="addyForm">
+		<form action="javascript:void(0);">
+			<label for="addyBox"></label>
+			<input type="text" id="addyBox" placeholder="Ex: 225 Bush Street, SF">
+			<input type="submit" value="Get location">
+		</form>
+	</div>
+
 	<div class="mainBox">
-		<div id="map-canvas">
-				<div class="getStarted">
-				<h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fuga quisquam nemo odio dolorem soluta architecto, cupiditate doloremque minus, iusto optio eaque error, et ut suscipit perferendis veniam laboriosam adipisci.</h3>
+		<div class="getStarted">
+				<h3>Bike Router is the only app you will ever need to plan your next bike ride route while also exploring the neighborhoods or cities that you ride through! Simply choose a starting point and then drop markers on the map to plot your route! 
+				<br> 
+				<br>
+				Every time you drop a marker, locations of interest will pop up based on the radius of that marker! Feel free to change your route to include these places if you want to grab say.. a mid-ride Indian Pale Ale or a carb-loading lunch! Click below when your'e ready to get started!</h3>
 	
 				<br>
 				<br>
+				<br>
 			
-				<button type="button" class="btn btn-primary btn-lg btn-block">Get Started!</button>
+				<button id="getStartedBtn" type="button" class="btn btn-primary btn-lg btn-block">Get Started!</button>
 			</div>
-		</div>
+		<div id="map-canvas"></div>
 
 	</div>
 

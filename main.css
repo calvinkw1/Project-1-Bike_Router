@@ -3,11 +3,23 @@
 	font-size: 5em;
 }
 
+.addyForm {
+	width: 400px;
+	margin: 0 auto;
+	margin-top: 50px;
+	display: none;
+}
+
+#addyBox {
+	width: 300px;
+	height: 30px;
+}
+
 .mainBox {
 	width: 1000px;
 	height: 500px;
 	margin: 0 auto;
-	margin-top: 100px;
+	margin-top: 50px;
 	display: block;
 	position: relative;
 	color: white;
@@ -23,10 +35,16 @@ body {
 
 /* This should go over the map, currently not working.. window.onload issue? */
 .getStarted {
+	margin-top: 100px;
 	position: absolute;
 	height: 90%;
 	width: 90%;
+	z-index: 99999;
 }
+ #getStartedBtn {
+ 	margin: 0 auto;
+ 	width: 70%;
+ }
 
 #map-canvas {
 	width: 100%;
