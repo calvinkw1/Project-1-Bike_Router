@@ -22,7 +22,7 @@
     $(".getStarted").hide();
     google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
     google.maps.event.addListener(map, 'click', function(event) {
-      // clickAddMarker(event.latLng);
+      clickAddMarker(event.latLng);
       console.log(event.latLng);
     });
 
@@ -50,43 +50,45 @@ function addMarker() {
   // Event listener for click on the marker to invoke bouncing animation on marker
   google.maps.event.addListener(marker, 'click', toggleBounce);
   // Event listener to load Places results
-  google.maps.event.addListener(marker, "dblclick", function(){
-    var markerLocation = new google.maps.LatLng(lat, lng);
-    var request = {
-      location: markerLocation,
-      radius: 100,
-      types: ["restaurant"]
-    };
-    var service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, function (results, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          var position = new google.maps.LatLng(results[i].geometry.location.k, results[i].geometry.location.D);
-          newMarker = new google.maps.Marker({
-            map: map,
-            image: results[i].icon,
-            title: results[i].name,
-            position: position
-          });
-          infowindow = new google.maps.InfoWindow({
-            content: results[i].name
-          });
-          google.maps.event.addListener(newMarker, 'click', function() {
-            infowindow.setContent('<div style="color:black; width: 75px;">' + this.title + '</div>');
-            console.log("infowindow",infowindow);
-            console.log("newMarker",this);
-            infowindow.open(map, this);
-          });
-          // bounds.extend(results[i].geometry.location);
-          map.setCenter(results[i].geometry.location);
-        }
-      }
-    });
+  google.maps.event.addListener(marker, "dblclick", initPlaces);
 
+function initPlaces() {
+  var markerLocation = new google.maps.LatLng(lat, lng);
+  var request = {
+    location: markerLocation,
+    radius: 100,
+    types: ["restaurant"]
+  };
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, markPlaces);
+}
 
-  });
+function markPlaces(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      var position = new google.maps.LatLng(results[i].geometry.location.k, results[i].geometry.location.D);
+      newMarker = new google.maps.Marker({
+        map: map,
+        image: results[i].icon,
+        title: results[i].name,
+        position: position
+      });
+      infowindow = new google.maps.InfoWindow({
+        content: results[i].name
+      });
+      google.maps.event.addListener(newMarker, 'click', openInfoWindow);
+    }
+  }
+}
 
-
+function openInfoWindow() {
+  infowindow.setContent('<div style="color:black; width: 75px;">' + this.title + '</div>');
+  console.log("infowindow",infowindow);
+  console.log("newMarker",this);
+  infowindow.open(map, this);
+}
+  // map.setCenter(results[i].geometry.location);   this line isn't needed unless centering the map after grabbing all places
+  
   // this toggles the bouncing animation for the marker when marker is clicked
   function toggleBounce() {
     if (marker.getAnimation() !== null) {
@@ -117,6 +119,16 @@ function submitAddyBox() {
       console.log(lat + ", " + lng);
       addMarker(); // calling function to drop marker on map
     });
-    // $("#addyBox").val("");
+    $("#addyBox").val(""); // clear text after submit
   });
+}
+
+function clickAddMarker(location) {
+  var marker = new google.maps.Marker({
+      draggable: true,
+      position: location,
+      map: map,
+      animation: google.maps.Animation.DROP,
+  });
+  google.maps.event.addListener(marker, "dblclick", initPlaces);
 }
