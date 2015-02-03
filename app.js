@@ -21,7 +21,7 @@
     google.maps.event.addListener(map, 'click', function(event) {
       clickAddMarker(event.latLng);
       console.log(event.latLng);
-  });
+    });
 
 }
 // the map init function will not work within a docready function
@@ -46,6 +46,9 @@ function addMarker() {
 
   // Event listener for click on the marker to invoke bouncing animation on marker
   google.maps.event.addListener(marker, 'click', toggleBounce);
+  // Event listener to load Places results
+  google.maps.event.addListener(marker, "dblclick", initPlaces);
+
 
   // this toggles the bouncing animation for the marker when marker is clicked
   function toggleBounce() {
@@ -59,13 +62,17 @@ function addMarker() {
 
 function clickAddMarker(location) {
   var marker = new google.maps.Marker({
+      draggable: true,
       position: location,
-      map: map
+      map: map,
+      animation: google.maps.Animation.DROP,
   });
+  google.maps.event.addListener(marker, "dblclick", initPlaces);
 }
 
 var lat,
-    lng;
+    lng,
+    userLocations = [];
 
 // this function will retrieve the lattitude/longitude of any address that is entered into the text box upon "submit" and place a marker on the location
 function submitAddyBox() {
@@ -81,9 +88,64 @@ function submitAddyBox() {
       lat = privLat; // storing private variables in public variables
       lng = privLng;
       console.log(lat + ", " + lng);
+      addMarker(); // calling function to drop marker on map
     });
-    addMarker(); // calling function to drop marker on map
     // $("#addyBox").val("");
   });
+}
+
+var map;
+var infowindow;
+
+function initPlaces() {
+  var markerLocation = new google.maps.LatLng(lat, lng);
+  var request = {
+    location: markerLocation,
+    radius: 100,
+    types: ["restaurant"]
+  };
+  infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, placesResults);
+}
+
+function placesResults(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    markers = [];
+    for (var i = 0; i < results.length; i++) {
+      // console.log(results[i]);  
+      createMarker(results[i]);
+      markers[i].setMap(null);
+    }
+  }
+}
+
+function createMarker(place) {
+
+  var placeLoc = place.geometry.location;
+  // console.log("createMarker");
+
+  var image = {
+        url: place.icon
+      };
+
+  var marker = new google.maps.Marker({
+    map: map,
+    icon: image,
+    title: place.name,
+    position: place.geometry.location
+  });
+
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+
+  markers.push(marker);
+  console.log(markers);
+  // bounds.extend(place.geometry.location);
+  map.setCenter(place.geometry.location);
+
 }
 
