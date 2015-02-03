@@ -1,5 +1,8 @@
 // initialize google's map
   var map,
+      name,
+      newMarker,
+      infowindow,
       mapLoaded = false;
   function initialize() {
     var mapOptions = {
@@ -19,7 +22,7 @@
     $(".getStarted").hide();
     google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
     google.maps.event.addListener(map, 'click', function(event) {
-      clickAddMarker(event.latLng);
+      // clickAddMarker(event.latLng);
       console.log(event.latLng);
     });
 
@@ -31,7 +34,7 @@
 function addMarker() {
   var myLatlng = new google.maps.LatLng(lat, lng);
   var mapOptions = {
-    zoom: 15,
+    zoom: 17,
     center: myLatlng
   };
   var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -47,7 +50,41 @@ function addMarker() {
   // Event listener for click on the marker to invoke bouncing animation on marker
   google.maps.event.addListener(marker, 'click', toggleBounce);
   // Event listener to load Places results
-  google.maps.event.addListener(marker, "dblclick", initPlaces);
+  google.maps.event.addListener(marker, "dblclick", function(){
+    var markerLocation = new google.maps.LatLng(lat, lng);
+    var request = {
+      location: markerLocation,
+      radius: 100,
+      types: ["restaurant"]
+    };
+    var service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, function (results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          var position = new google.maps.LatLng(results[i].geometry.location.k, results[i].geometry.location.D);
+          newMarker = new google.maps.Marker({
+            map: map,
+            image: results[i].icon,
+            title: results[i].name,
+            position: position
+          });
+          infowindow = new google.maps.InfoWindow({
+            content: results[i].name
+          });
+          google.maps.event.addListener(newMarker, 'click', function() {
+            infowindow.setContent('<div style="color:black; width: 75px;">' + this.title + '</div>');
+            console.log("infowindow",infowindow);
+            console.log("newMarker",this);
+            infowindow.open(map, this);
+          });
+          // bounds.extend(results[i].geometry.location);
+          map.setCenter(results[i].geometry.location);
+        }
+      }
+    });
+
+
+  });
 
 
   // this toggles the bouncing animation for the marker when marker is clicked
@@ -58,16 +95,6 @@ function addMarker() {
       marker.setAnimation(google.maps.Animation.BOUNCE);
     }
   }
-}
-
-function clickAddMarker(location) {
-  var marker = new google.maps.Marker({
-      draggable: true,
-      position: location,
-      map: map,
-      animation: google.maps.Animation.DROP,
-  });
-  google.maps.event.addListener(marker, "dblclick", initPlaces);
 }
 
 var lat,
@@ -82,7 +109,7 @@ function submitAddyBox() {
     e.preventDefault();
     // getJSON function below to retrieve the lat/lng from google's geocode api
     $.getJSON(url, function(data) {
-      console.log(data);
+
       var privLat = data.results[0].geometry.location.lat; // json result stored in variable
       var privLng = data.results[0].geometry.location.lng; // json result stored in variable
       lat = privLat; // storing private variables in public variables
@@ -93,59 +120,3 @@ function submitAddyBox() {
     // $("#addyBox").val("");
   });
 }
-
-var map;
-var infowindow;
-
-function initPlaces() {
-  var markerLocation = new google.maps.LatLng(lat, lng);
-  var request = {
-    location: markerLocation,
-    radius: 100,
-    types: ["restaurant"]
-  };
-  infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, placesResults);
-}
-
-function placesResults(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    markers = [];
-    for (var i = 0; i < results.length; i++) {
-      // console.log(results[i]);  
-      createMarker(results[i]);
-      markers[i].setMap(null);
-    }
-  }
-}
-
-function createMarker(place) {
-
-  var placeLoc = place.geometry.location;
-  // console.log("createMarker");
-
-  var image = {
-        url: place.icon
-      };
-
-  var marker = new google.maps.Marker({
-    map: map,
-    icon: image,
-    title: place.name,
-    position: place.geometry.location
-  });
-
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-
-  markers.push(marker);
-  console.log(markers);
-  // bounds.extend(place.geometry.location);
-  map.setCenter(place.geometry.location);
-
-}
-
