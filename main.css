@@ -20,14 +20,15 @@
 	width: 300px;
 	background-color: white;
 	display: inline-block;
-/*	visibility: hidden;
-*/}
+	visibility: hidden;
+	overflow: scroll;
+}
 
 .mainBox {
 	width: 1000px;
 	height: 500px;
 	margin: 0 auto;
-	margin-top: 50px;
+	margin-top: 10px;
 	display: inline-block;
 	position: relative;
 	color: white;
@@ -40,8 +41,9 @@
 	width: 300px;
 	background-color: white;
 	display: inline-block;
-/*	visibility: hidden;
-*/}
+	overflow: scroll;
+	visibility: hidden;
+}
 
 body {
 	background-image: url(city-bike.jpg);
