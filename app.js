@@ -14,30 +14,13 @@ var map,
     endDest = parseInt(endLat) + parseInt(endLng),
     wayptsArray = [],
     placesArray = [],
-    mapLoaded = false;
+    mapLoaded = false,
+    directionsDisplay,
+    directionsService = new google.maps.DirectionsService();
+
 
 // the map init function will not work within a docready function
 google.maps.event.addDomListener(document.getElementById("getStartedBtn"), "click", initialize);
-
-function initialize() {
-  var mapOptions = {
-    zoom: 12,
-    center: new google.maps.LatLng(37.7749300 , -122.4194200),
-    panControl: true,
-    zoomControl: true,
-    mapTypeControl: true,
-    scaleControl: true,
-    streetViewControl: true,
-    overviewMapControl: true
-  };
-  map = new google.maps.Map(document.getElementById("map-canvas"),
-      mapOptions);
-  mapLoaded = true;
-  $(".addyForm").show();
-  $(".getStarted").hide();
-  google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
-
-}
 
 // this function will retrieve the lattitude/longitude of any address that is entered into the text box upon "submit" and place a marker on the location
 function submitAddyBox() {
@@ -51,11 +34,39 @@ function submitAddyBox() {
       var privLng = data.results[0].geometry.location.lng; // json result stored in variable
       startLat = privLat; // storing private variables in public variables
       startLng = privLng;
+      start = new google.maps.LatLng(startLat, startLng);
       addMarker(); // calling function to drop marker on map
     });
     $("#addyBox").val(""); // clear text after submit
   });
 }
+
+function initialize() {
+  var rendererOptions = {
+    draggable: true
+  };
+  directionsDisplay = new google.maps.DirectionsRenderer({polylineOptions: polylineOptionsActual});
+  var mapOptions = {
+    zoom: 12,
+    center: new google.maps.LatLng(37.7749300 , -122.4194200),
+    panControl: true,
+    zoomControl: true,
+    mapTypeControl: true,
+    scaleControl: true,
+    streetViewControl: true,
+    overviewMapControl: true
+  };
+  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  mapLoaded = true;
+  $(".addyForm").show();
+  $(".getStarted").hide();
+  google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  directionsDisplay.setMap(map);
+  directionsDisplay.setPanel(document.getElementById("directions-panel"));
+}
+
+
 
 function addMarker() {
   var myLatlng = new google.maps.LatLng(startLat, startLng);
@@ -87,8 +98,8 @@ function addMarker() {
     var markerLocation = new google.maps.LatLng(lat, lng);
     var request = {
       location: markerLocation,
-      radius: 100,
-      types: ["bar"]
+      radius: 150,
+      types: ["bar", "restaurant"]
     };
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch(request, markPlaces);
@@ -165,33 +176,15 @@ function addMarker() {
     });
 
     google.maps.event.addListener(wyptMarker, "dblclick", initPlaces);
-    initDirections();
     calcRoute();
   }
 }
 
-var rendererOptions = {
-  draggable: true
-};
-var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-var directionsService = new google.maps.DirectionsService();
 
-function initDirections() {
-  $(".directionsBox").css("visibility", "visible");
-  directionsDisplay = new google.maps.DirectionsRenderer();
-  start = new google.maps.LatLng(startLat, startLng);
-  var mapOptions = {
-    zoom: 5,
-    center: start
-  };
-  // map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-  // directionsDisplay.setMap(map);
-  directionsDisplay.setPanel(document.getElementById("directions-panel"));
 
-}
 
 function calcRoute() {
-
+  $(".directionsBox").css("visibility", "visible");
   var request = {
     origin: start,
     waypoints: wayptsArray,
@@ -201,8 +194,16 @@ function calcRoute() {
   console.log(request);
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(result);
-    }
-    console.log(result + ", " + status);
-  });
-}
+            //options.suppressMarkers = true;
+            // directionsDisplay.setOptions(options);// = new google.maps.DirectionsRenderer(options);
+            directionsDisplay.setDirections(result);
+          }
+        });
+      }
+  
+
+var polylineOptionsActual = new google.maps.Polyline({
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 10
+    });
