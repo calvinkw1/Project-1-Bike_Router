@@ -16,7 +16,9 @@ var map,
     placesArray = [],
     mapLoaded = false,
     directionsDisplay,
-    directionsService = new google.maps.DirectionsService();
+    directionsService = new google.maps.DirectionsService(),
+    poly,
+    map;
 
 
 // the map init function will not work within a docready function
@@ -45,7 +47,6 @@ function initialize() {
   var rendererOptions = {
     draggable: true
   };
-  directionsDisplay = new google.maps.DirectionsRenderer({polylineOptions: polylineOptionsActual});
   var mapOptions = {
     zoom: 12,
     center: new google.maps.LatLng(37.7749300 , -122.4194200),
@@ -56,6 +57,14 @@ function initialize() {
     streetViewControl: true,
     overviewMapControl: true
   };
+  var polyOptions = {
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 3
+  };
+  poly = new google.maps.Polyline(polyOptions);
+  poly.setMap(map);
+  directionsDisplay = new google.maps.DirectionsRenderer({polylineOptions: polylineOptionsActual});
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   mapLoaded = true;
   $(".addyForm").show();
@@ -64,6 +73,7 @@ function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById("directions-panel"));
+
 }
 
 
@@ -78,7 +88,8 @@ function addMarker() {
   var marker = new google.maps.Marker({
     draggable: true,
     animation: google.maps.Animation.DROP,
-    position: myLatlng
+    position: myLatlng,
+    icon: "map_marker_start.png"
   });
 
 
@@ -113,15 +124,17 @@ function addMarker() {
         placesArray[x].setMap(null);
       }
       placesArray = [];
-
+      console.log(results);
       for (var i = 0; i < results.length; i++) {
         var position = new google.maps.LatLng(results[i].geometry.location.k, results[i].geometry.location.D);
+        // var markerImage = results[i].icon;
         placesMarker = new google.maps.Marker({
           map: map,
-          image: results[i].icon,
+          icon: results[i].icon,
           title: results[i].name,
           position: position,
-          draggable: false
+          draggable: false,
+          size: new google.maps.Size(10, 10)
         });
         var placeTitle = results[i].name;
         var placeImage = results[i].icon;
@@ -133,14 +146,15 @@ function addMarker() {
           content: results[i].name
         });
         google.maps.event.addListener(placesMarker, 'click', openInfoWindow);
-        $(".listItems").append("<h4>" + placeTitle + "</h4><p>Address: " + placeVicinity + "</p><p>Rating: " + placeRating + "</p><hr>");
+        $(".listItems").append("<hr><img src='" + placeImage + "'><h4>" + placeTitle + "</h4><p>Address: " + placeVicinity + "</p><p>Rating: " + placeRating + "</p><hr>");
       }
     }
   }
 
   // opens info window of a places marker
   function openInfoWindow() {
-    infowindow.setContent('<div style="color:black; width: 75px;">' + this.title + '</div>');
+    console.log(this);
+    infowindow.setContent('<div style="color:black; width: 75px;">' + this.title + "<img src='"+ this.image +"''>" +'</div>');
     // console.log("infowindow",infowindow);
     // console.log("placesMarker",this);
     infowindow.open(map, this);
@@ -168,20 +182,20 @@ function addMarker() {
       position: wyptLatlng,
       map: map,
       animation: google.maps.Animation.DROP,
+      icon: "map_marker_waypoint.png"
     });
     // wayptsArray.push(wyptLatlng);
     wayptsArray.push({
       location: location,
       stopover: true
     });
+    var path = poly.getPath();
+    path.push(event.latLng);
 
     google.maps.event.addListener(wyptMarker, "dblclick", initPlaces);
     calcRoute();
   }
 }
-
-
-
 
 function calcRoute() {
   $(".directionsBox").css("visibility", "visible");
@@ -194,7 +208,7 @@ function calcRoute() {
   console.log(request);
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-            //options.suppressMarkers = true;
+            // options.suppressMarkers = true;
             // directionsDisplay.setOptions(options);// = new google.maps.DirectionsRenderer(options);
             directionsDisplay.setDirections(result);
           }
