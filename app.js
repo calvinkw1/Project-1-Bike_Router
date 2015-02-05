@@ -71,10 +71,10 @@ function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer(polylineOptions);
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   mapLoaded = true;
-  $(".addyForm").show();
+  $(".addyForm").css("visibility", "visible");
   $(".getStarted").hide();
   $(".mainBox").css("padding-left", "0");
-  $(".mainBox").css("background-color", "none");
+  $(".mainBox").css("background-color", "black");
   $(".mainBox").css("opacity", "1");
   google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
   directionsDisplay = new google.maps.DirectionsRenderer();
