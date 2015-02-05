@@ -51,7 +51,7 @@ function initialize() {
     draggable: true
   };
   var mapOptions = {
-    zoom: 12,
+    zoom: 13,
     center: new google.maps.LatLng(37.7749300 , -122.4194200),
     panControl: true,
     zoomControl: true,
@@ -130,9 +130,10 @@ function addMarker() {
       placesArray = [];
       for (var i = 0; i < results.length; i++) {
         var position = new google.maps.LatLng(results[i].geometry.location.k, results[i].geometry.location.D);
+        var gpmarker = new google.maps.MarkerImage(results[i].icon, null, null, null, new google.maps.Size(25, 25));
         placesMarker = new google.maps.Marker({
           map: map,
-          icon: results[i].icon,
+          icon: gpmarker,
           title: results[i].name,
           position: position,
           draggable: false,
@@ -159,7 +160,6 @@ function addMarker() {
     // console.log("placesMarker",this);
     infowindow.open(map, this);
   }
-    // map.setCenter(results[i].geometry.location);   this line isn't needed unless centering the map after grabbing all places
 
     // this toggles the bouncing animation for the marker when marker is clicked
   function toggleBounce() {
