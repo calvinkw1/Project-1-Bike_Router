@@ -73,6 +73,9 @@ function initialize() {
   mapLoaded = true;
   $(".addyForm").show();
   $(".getStarted").hide();
+  $(".mainBox").css("padding-left", "0");
+  $(".mainBox").css("background-color", "none");
+  $(".mainBox").css("opacity", "1");
   google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
@@ -123,6 +126,7 @@ function addMarker() {
   function markPlaces(results, status) {
     $(".placesList").css("visibility", "visible");
     $(".listItems").empty();
+    console.log(results);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for (var x = 0; x < placesArray.length; x++) {
         placesArray[x].setMap(null);
@@ -147,18 +151,18 @@ function addMarker() {
           content: results[i].name
         });
         google.maps.event.addListener(placesMarker, 'click', openInfoWindow);
-        $(".listItems").append("<hr><img class='placesMarker' src='" + placeImage + "'><h4>" + placeTitle + "</h4><p>Address: " + placeVicinity + "</p><p>Rating: " + placeRating + "</p>");
+        $(".listItems").append("<div class='item'><img class='placesMarker' src='" + placeImage + "'><h4>" + placeTitle + "</h4><p>Address: " + placeVicinity + "</p><p>Rating: " + placeRating + "</p></div>");
       }
     }
   }
 
   // opens info window of a places marker
   function openInfoWindow() {
-    console.log(this);
     infowindow.setContent('<div style="color:black; width: 75px;">' + this.title + '</div>');
     // console.log("infowindow",infowindow);
     // console.log("placesMarker",this);
     infowindow.open(map, this);
+    $(this).css("background-color", "#a9fcf5");
   }
 
     // this toggles the bouncing animation for the marker when marker is clicked
