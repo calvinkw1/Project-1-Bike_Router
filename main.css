@@ -12,6 +12,10 @@
 	border-radius: 15px;
 }
 
+.mainWrap {
+	margin: 0 auto;
+}
+
 .addyForm {
 	font-family: Impact;
 	font-variant: small-caps;
@@ -36,6 +40,7 @@ span {
 	color: black;
 	margin-left: 10px;
 	padding-left: 20px;
+	font-size: 15pt;
 }
 
 #submitBtn {
@@ -125,4 +130,28 @@ body {
 .placesMarker {
 	height: 20px;
 	width: auto;
+}
+
+.instructPanel {
+	height: 70px;
+	width: 600px;
+	background-color: #28d3c5;
+	margin: 0 auto;
+	padding-top: 10px;
+	text-align: center;
+	font-family: Impact;
+	font-variant: small-caps;
+	color: white;
+	font-size: 17pt;
+	border-radius: 15px;
+	display: block;
+	visibility: hidden;
+}
+
+img {
+	display: inline-block;
+}
+
+.instructPanel div {
+	display: inline-block;
 }
