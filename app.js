@@ -210,8 +210,6 @@ function addMarker() {
   };
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-            // options.suppressMarkers = true;
-            // directionsDisplay.setOptions(options);// = new google.maps.DirectionsRenderer(options);
             directionsDisplay.setDirections(result);
           }
         });
