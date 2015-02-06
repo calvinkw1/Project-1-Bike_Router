@@ -43,6 +43,8 @@ function submitAddyBox() {
       addMarker(); // calling function to drop marker on map
     });
     $("#addyBox").val(""); // clear text after submit
+    $(".instructPanel > img").attr("src", "");
+    $(".instructPanel > div").text("Now click anywhere on the map to set a marker and begin plotting your route!");
   });
 }
 
@@ -71,7 +73,8 @@ function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer(polylineOptions);
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   mapLoaded = true;
-  $(".addyForm").css("visibility", "visible");
+  $(".addyForm").slideDown("slow");
+  $(".instructPanel").slideDown("slow");
   $(".getStarted").hide();
   $(".mainBox").css("padding-left", "0");
   $(".mainBox").css("background-color", "black");
@@ -80,7 +83,6 @@ function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById("directions-panel"));
-
 }
 
 
@@ -102,7 +104,6 @@ function addMarker() {
 
   // To add the marker to the map, call setMap();
   marker.setMap(map);
-
   // Event listener for click on the marker to invoke bouncing animation on marker
   google.maps.event.addListener(marker, 'click', toggleBounce);
   // Event listener to load Places results
@@ -111,6 +112,43 @@ function addMarker() {
   google.maps.event.addListener(map, 'click', function(event) {
     clickAddMarker(event.latLng);
   });
+
+// Add a marker on the map for the next route plotting sequence
+  function clickAddMarker(location) {
+    lat = location.k;
+    lng = location.D;
+    endLat = lat;
+    endLng = lng;
+    var wyptLatlng = new google.maps.LatLng(lat, lng);
+    var wyptMarker = new google.maps.Marker({
+      draggable: true,
+      position: wyptLatlng,
+      map: map,
+      animation: google.maps.Animation.DROP,
+      icon: "map_marker_waypoint.png"
+    });
+    wayptsArray.push({
+      location: location,
+      stopover: true
+    });
+    var path = poly.getPath();
+    path.push(event.latLng);
+    for (i = 0; i < wayptsArray.length; i++) {
+      google.maps.event.addListener(this, "click", openWindow);
+    }
+    google.maps.event.addListener(wyptMarker, "dblclick", initPlaces);
+    calcRoute();
+    $(".instructPanel > img").attr("src", "map_marker_waypoint.png");
+    $(".instructPanel > div").text("Double click on any marker to see what's nearby!");
+  }
+
+  function openWindow() {
+    infowindow.setContent("<div style='color:black; width: 75px;'>" + this.title + "</div><button id='removeMarker'>Remove</button>");
+    // console.log("infowindow",infowindow);
+    // console.log("placesMarker",this);
+    infowindow.open(map, this);
+    $(this).css("background-color", "#a9fcf5");
+  }
 
   function initPlaces() {
     var markerLocation = new google.maps.LatLng(lat, lng);
@@ -153,7 +191,11 @@ function addMarker() {
         google.maps.event.addListener(placesMarker, 'click', openInfoWindow);
         $(".listItems").append("<div class='item'><img class='placesMarker' src='" + placeImage + "'><h4>" + placeTitle + "</h4><p>Address: " + placeVicinity + "</p><p>Rating: " + placeRating + "</p></div>");
       }
+    } else {
+      $(".listItems").append("<div class='item'>Nothing nearby! Try another location!</div>");
     }
+    $(".instructPanel > img").attr("src", "map_places_marker_bar.png");
+    $(".instructPanel > div").text("Info about the places marked can be seen in the panel on the right!");
   }
 
   // opens info window of a places marker
@@ -174,40 +216,18 @@ function addMarker() {
     }
   }
 
-  function clickAddMarker(location) {
-    // console.log(location);
-    lat = location.k;
-    lng = location.D;
-    endLat = lat;
-    endLng = lng;
-    var wyptLatlng = new google.maps.LatLng(lat, lng);
-    var wyptMarker = new google.maps.Marker({
-      draggable: true,
-      position: wyptLatlng,
-      map: map,
-      animation: google.maps.Animation.DROP,
-      icon: "map_marker_waypoint.png"
-    });
-    // wayptsArray.push(wyptLatlng);
-    wayptsArray.push({
-      location: location,
-      stopover: true
-    });
-    var path = poly.getPath();
-    path.push(event.latLng);
-
-    google.maps.event.addListener(wyptMarker, "dblclick", initPlaces);
-    calcRoute();
-  }
-
   function calcRoute() {
   $(".directionsBox").css("visibility", "visible");
   var request = {
     origin: start,
     waypoints: wayptsArray,
     destination: new google.maps.LatLng(endLat, endLng),
-    travelMode: google.maps.TravelMode.BICYCLING,
+    travelMode: google.maps.TravelMode.BICYCLING
   };
+  var content = "<div><button></div>";
+  var infowindow = new google.maps.InfoWindow({
+      content: content
+  });
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(result);
