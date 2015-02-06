@@ -73,8 +73,8 @@ function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer(polylineOptions);
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   mapLoaded = true;
-  $(".addyForm").css("visibility", "visible");
-  $(".instructPanel").css("visibility", "visible");
+  $(".addyForm").slideDown("slow");
+  $(".instructPanel").slideDown("slow");
   $(".getStarted").hide();
   $(".mainBox").css("padding-left", "0");
   $(".mainBox").css("background-color", "black");
@@ -133,7 +133,9 @@ function addMarker() {
     });
     var path = poly.getPath();
     path.push(event.latLng);
-    google.maps.event.addListener(wyptMarker, "click", openWindow);
+    for (i = 0; i < wayptsArray.length; i++) {
+      google.maps.event.addListener(this, "click", openWindow);
+    }
     google.maps.event.addListener(wyptMarker, "dblclick", initPlaces);
     calcRoute();
     $(".instructPanel > img").attr("src", "map_marker_waypoint.png");
@@ -141,7 +143,7 @@ function addMarker() {
   }
 
   function openWindow() {
-    infowindow.setContent('<div style="color:black; width: 75px;">' + this.title + '</div>');
+    infowindow.setContent("<div style='color:black; width: 75px;'>" + this.title + "</div><button id='removeMarker'>Remove</button>");
     // console.log("infowindow",infowindow);
     // console.log("placesMarker",this);
     infowindow.open(map, this);
