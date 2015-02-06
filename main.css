@@ -5,7 +5,7 @@
 	text-align: center;
 	color: white;
 	font-size: 5em;
-	width: 400px;
+	width: 25%;
 	height: auto;
 	background-color: #28d3c5;
 	display: block;
@@ -16,7 +16,7 @@
 	font-family: Impact;
 	font-variant: small-caps;
 	padding-left: 10px;
-	width: 580px;
+	width: 35%;
 	margin: 0 auto;
 	margin-top: 50px;
 	visibility: hidden;
@@ -99,6 +99,8 @@ body {
 	background-image: url(city-bike.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
+	height: auto;
+	width: auto;
 }
 
 .getStarted {
