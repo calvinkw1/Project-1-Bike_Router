@@ -93,6 +93,7 @@ function addMarker() {
     zoom: 15,
     center: myLatlng
   };
+  // this line creates a new instance of the map and prevents polylines being drawn
   // var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   var marker = new google.maps.Marker({
     draggable: true,
@@ -231,8 +232,6 @@ function addMarker() {
   });
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-            // options.suppressMarkers = true;
-            // directionsDisplay.setOptions(options);// = new google.maps.DirectionsRenderer(options);
             directionsDisplay.setDirections(result);
           }
         });
