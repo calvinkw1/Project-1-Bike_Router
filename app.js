@@ -116,7 +116,7 @@ function addMarker() {
 
 // Add a marker on the map for the next route plotting sequence
   function clickAddMarker(location) {
-    lat = location.k;
+    lat = location.A;
     lng = location.D;
     endLat = lat;
     endLng = lng;
