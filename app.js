@@ -111,12 +111,13 @@ function addMarker() {
 
   google.maps.event.addListener(map, 'click', function(event) {
     clickAddMarker(event.latLng);
+    // console.log(event);
   });
 
 // Add a marker on the map for the next route plotting sequence
   function clickAddMarker(location) {
-    lat = location.k;
-    lng = location.D;
+    lat = location.A; // note that this reference may be affected if there is an api key change
+    lng = location.F; // note that this reference may be affected if there is an api key change
     endLat = lat;
     endLng = lng;
     var wyptLatlng = new google.maps.LatLng(lat, lng);
