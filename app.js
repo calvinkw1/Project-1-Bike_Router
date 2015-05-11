@@ -173,7 +173,7 @@ function addMarker() {
       }
       placesArray = [];
       for (var i = 0; i < results.length; i++) {
-        var position = new google.maps.LatLng(results[i].geometry.location.A, results[i].geometry.location.F);
+        var position = new google.maps.LatLng(results[i].geometry.location.A, results[i].geometry.location.F); // this is also affected by API key changes (location.A and location.F)
         var gpmarker = new google.maps.MarkerImage(results[i].icon, null, null, null, new google.maps.Size(25, 25));
         placesMarker = new google.maps.Marker({
           map: map,
