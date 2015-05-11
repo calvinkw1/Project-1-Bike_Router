@@ -30,7 +30,7 @@ google.maps.event.addDomListener(document.getElementById("getStartedBtn"), "clic
 function submitAddyBox() {
   $("form").on("submit", function(e) {
     var address = $("#addyBox").val();
-    var url = encodeURI("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDE6F79FbnrSc9hZlurECTyBJoEyHCj-Nc"); // this encodes the URL to account for spaces
+    var url = encodeURI("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyBI5LF1sVoWrTNs-bBkPwOO38j8vFPUuh4"); // this encodes the URL to account for spaces
     e.preventDefault();
     // getJSON function below to retrieve the lat/lng from google's geocode api
     $.getJSON(url, function(data) {
