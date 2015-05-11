@@ -112,7 +112,7 @@ function addMarker() {
 
   google.maps.event.addListener(map, 'click', function(event) {
     clickAddMarker(event.latLng);
-    // console.log(event);
+    console.log(event);
   });
 
 // Add a marker on the map for the next route plotting sequence
