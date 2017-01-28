@@ -99,7 +99,7 @@ function addMarker() {
     draggable: true,
     animation: google.maps.Animation.DROP,
     position: myLatlng,
-    icon: "map_marker_start.png"
+    icon: "assets/map_marker_start.png"
   });
 
 
@@ -127,7 +127,7 @@ function addMarker() {
       position: wyptLatlng,
       map: map,
       animation: google.maps.Animation.DROP,
-      icon: "map_marker_waypoint.png"
+      icon: "assets/map_marker_waypoint.png"
     });
     wayptsArray.push({
       location: location,
@@ -140,7 +140,7 @@ function addMarker() {
     }
     google.maps.event.addListener(wyptMarker, "dblclick", initPlaces);
     calcRoute();
-    $(".instructPanel > img").attr("src", "map_marker_waypoint.png");
+    $(".instructPanel > img").attr("src", "assets/map_marker_waypoint.png");
     $(".instructPanel > div").text("Double click on any marker to see what's nearby!");
   }
 
@@ -196,7 +196,7 @@ function addMarker() {
     } else {
       $(".listItems").append("<div class='item'>Nothing nearby! Try another location!</div>");
     }
-    $(".instructPanel > img").attr("src", "map_places_marker_bar.png");
+    $(".instructPanel > img").attr("src", "assets/map_places_marker_bar.png");
     $(".instructPanel > div").text("Info about the places marked can be seen in the panel on the right!");
   }
 
@@ -237,8 +237,3 @@ function addMarker() {
         });
       }
 }
-
-
-  
-
-

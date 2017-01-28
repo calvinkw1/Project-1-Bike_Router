@@ -102,7 +102,7 @@ span {
 }
 
 body {
-	background-image: url(city-bike.jpg);
+	background-image: url(assets/city-bike.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: auto;
