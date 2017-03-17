@@ -17,17 +17,18 @@
 }
 
 .addyForm {
-	font-family: Impact;
-	font-variant: small-caps;
-	padding-left: 10px;
-	width: 35%;
-	margin: 0 auto;
-	margin-top: 50px;
-	display: none;
-	color: white;
-	background-color: #28d3c5;
-	border-radius: 15px;
-	font-size: 15px;
+  font-family: Impact;
+  font-variant: small-caps;
+  padding-left: 2em;
+  width: 35%;
+  margin: 0 auto;
+  margin-top: 4%;
+  margin-bottom: .5%;
+  display: none;
+  color: white;
+  background-color: #28d3c5;
+  border-radius: 15px;
+  font-size: 15px;
 }
 
 span {
@@ -50,9 +51,9 @@ span {
 }
 
 .directionsBox {
-	margin-left: 30px;
-	height: 500px;
-	width: 300px;
+  margin-left: 2%;
+  height: 58vh;
+  width: 18vw;
 	background-color: white;
 	display: inline-block;
 	visibility: hidden;
@@ -65,24 +66,24 @@ span {
 }
 
 .mainBox {
-	width: 1000px;
-	height: 500px;
-	margin: 0 auto;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	display: inline-block;
-	position: relative;
-	color: white;
-	font-size: 12px;
-	text-align: center;
-	padding-left: 40px;
-	background-color: rgba(0, 0, 0, 0.7);
-	border-radius: 20px;
+  width: 60vw;
+  height: 58vh;
+  /* margin: 0 auto; */
+  /* margin-top: 2%; */
+  /* margin-bottom: 10px; */
+  display: inline-block;
+  position: relative;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  padding-left: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
 }
 
 .placesList {
-	height: 500px;
-	width: 300px;
+	height: 58vh;
+  width: 18vw;
 	background-color: white;
 	display: inline-block;
 	visibility: hidden;
