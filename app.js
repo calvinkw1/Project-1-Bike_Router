@@ -20,8 +20,7 @@ var map,
     directionsService = new google.maps.DirectionsService(),
     poly,
     polyOptions,
-    polylineOptions = new google.maps.Polyline(),
-    path;
+    polylineOptions = new google.maps.Polyline();
 
 // the map init function will not work within a docready function
 google.maps.event.addDomListener(document.getElementById("getStartedBtn"), "click", initialize);
@@ -99,7 +98,7 @@ function addMarker() {
     draggable: true,
     animation: google.maps.Animation.DROP,
     position: myLatlng,
-    icon: "map_marker_start.png"
+    icon: "assets/map_marker_start.png"
   });
 
 
@@ -111,14 +110,13 @@ function addMarker() {
   google.maps.event.addListener(marker, "dblclick", initPlaces);
 
   google.maps.event.addListener(map, 'click', function(event) {
-    clickAddMarker(event.latLng);
-    console.log(event);
+    clickAddMarker(event);
   });
 
 // Add a marker on the map for the next route plotting sequence
   function clickAddMarker(location) {
-    lat = location.A; // note that this reference may be affected if there is an api key change
-    lng = location.F; // note that this reference may be affected if there is an api key change
+    lat = location.latLng.lat(); // note that this reference may be affected if there is an api key change
+    lng = location.latLng.lng(); // note that this reference may be affected if there is an api key change
     endLat = lat;
     endLng = lng;
     var wyptLatlng = new google.maps.LatLng(lat, lng);
@@ -127,20 +125,18 @@ function addMarker() {
       position: wyptLatlng,
       map: map,
       animation: google.maps.Animation.DROP,
-      icon: "map_marker_waypoint.png"
+      icon: "assets/map_marker_waypoint.png"
     });
     wayptsArray.push({
-      location: location,
+      location: location.latLng,
       stopover: true
     });
-    var path = poly.getPath();
-    path.push(event.latLng);
     for (i = 0; i < wayptsArray.length; i++) {
       google.maps.event.addListener(this, "click", openWindow);
     }
     google.maps.event.addListener(wyptMarker, "dblclick", initPlaces);
     calcRoute();
-    $(".instructPanel > img").attr("src", "map_marker_waypoint.png");
+    $(".instructPanel > img").attr("src", "assets/map_marker_waypoint.png");
     $(".instructPanel > div").text("Double click on any marker to see what's nearby!");
   }
 
@@ -173,7 +169,7 @@ function addMarker() {
       }
       placesArray = [];
       for (var i = 0; i < results.length; i++) {
-        var position = new google.maps.LatLng(results[i].geometry.location.A, results[i].geometry.location.F);
+        var position = new google.maps.LatLng(results[i].geometry.location.A, results[i].geometry.location.F); // this is also affected by API key changes (location.A and location.F)
         var gpmarker = new google.maps.MarkerImage(results[i].icon, null, null, null, new google.maps.Size(25, 25));
         placesMarker = new google.maps.Marker({
           map: map,
@@ -196,7 +192,7 @@ function addMarker() {
     } else {
       $(".listItems").append("<div class='item'>Nothing nearby! Try another location!</div>");
     }
-    $(".instructPanel > img").attr("src", "map_places_marker_bar.png");
+    $(".instructPanel > img").attr("src", "assets/map_places_marker_bar.png");
     $(".instructPanel > div").text("Info about the places marked can be seen in the panel on the right!");
   }
 
@@ -237,8 +233,3 @@ function addMarker() {
         });
       }
 }
-
-
-  
-
-
