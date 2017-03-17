@@ -20,8 +20,7 @@ var map,
     directionsService = new google.maps.DirectionsService(),
     poly,
     polyOptions,
-    polylineOptions = new google.maps.Polyline(),
-    path;
+    polylineOptions = new google.maps.Polyline();
 
 // the map init function will not work within a docready function
 google.maps.event.addDomListener(document.getElementById("getStartedBtn"), "click", initialize);
@@ -111,14 +110,13 @@ function addMarker() {
   google.maps.event.addListener(marker, "dblclick", initPlaces);
 
   google.maps.event.addListener(map, 'click', function(event) {
-    clickAddMarker(event.latLng);
-    console.log(event);
+    clickAddMarker(event);
   });
 
 // Add a marker on the map for the next route plotting sequence
   function clickAddMarker(location) {
-    lat = location.A; // note that this reference may be affected if there is an api key change
-    lng = location.F; // note that this reference may be affected if there is an api key change
+    lat = location.latLng.lat(); // note that this reference may be affected if there is an api key change
+    lng = location.latLng.lng(); // note that this reference may be affected if there is an api key change
     endLat = lat;
     endLng = lng;
     var wyptLatlng = new google.maps.LatLng(lat, lng);
@@ -130,11 +128,9 @@ function addMarker() {
       icon: "assets/map_marker_waypoint.png"
     });
     wayptsArray.push({
-      location: location,
+      location: location.latLng,
       stopover: true
     });
-    var path = poly.getPath();
-    path.push(event.latLng);
     for (i = 0; i < wayptsArray.length; i++) {
       google.maps.event.addListener(this, "click", openWindow);
     }
