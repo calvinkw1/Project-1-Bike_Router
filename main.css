@@ -160,3 +160,11 @@ img {
 .instructPanel div {
 	display: inline-block;
 }
+
+.directionsBox::-webkit-scrollbar { 
+    display: none; 
+}
+
+.placesList::-webkit-scrollbar { 
+    display: none; 
+}
