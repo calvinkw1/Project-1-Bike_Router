@@ -72,12 +72,17 @@ function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer(polylineOptions);
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   mapLoaded = true;
-  $(".addyForm").slideDown("slow");
-  $(".instructPanel").slideDown("slow");
-  $(".getStarted").hide();
-  $(".mainBox").css("padding-left", "0");
   $(".mainBox").css("background-color", "black");
-  $(".mainBox").css("opacity", "1");
+  $(".mainBox").css("opacity", "1");  
+  $(".mainBox").css("padding-left", "0");
+  $(".getStarted").fadeOut(function() {
+    $(".addyForm").fadeIn("slow");
+    $(".instructPanel").fadeIn("slow");
+    $(".appName").css("margin-bottom", "0%");
+
+
+  });
+  
   google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
@@ -160,7 +165,7 @@ function addMarker() {
   }
 
   function markPlaces(results, status) {
-    $(".placesList").css("visibility", "visible");
+    $(".placesList").css("visibility", "visible").hide().fadeIn("slow");
     $(".listItems").empty();
     console.log(results);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -215,7 +220,7 @@ function addMarker() {
   }
 
   function calcRoute() {
-  $(".directionsBox").css("visibility", "visible");
+  $(".directionsBox").css("visibility", "visible").hide().fadeIn("slow");
   var request = {
     origin: start,
     waypoints: wayptsArray,
