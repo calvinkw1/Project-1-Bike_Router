@@ -1,15 +1,18 @@
 .appName {
-	font-family: Impact;
-	letter-spacing: 7px;
-	font-variant: small-caps;
-	text-align: center;
-	color: white;
-	font-size: 5em;
-	width: 25%;
-	height: auto;
-	background-color: #28d3c5;
-	display: block;
-	border-radius: 15px;
+  font-family: Impact;
+  letter-spacing: .1em;
+  font-variant: small-caps;
+  text-align: center;
+  color: white;
+  font-size: 5em;
+  width: 25%;
+  padding-left: 2%;
+  padding-right: 2%;
+  height: auto;
+  background-color: #28d3c5;
+  display: block;
+  border-radius: 15px;
+  margin-bottom: 9%;
 }
 
 .mainWrap {
@@ -36,12 +39,13 @@ span {
 }
 
 #addyBox {
-	width: 300px;
-	height: 50px;
-	color: black;
-	margin-left: 10px;
-	padding-left: 20px;
-	font-size: 15pt;
+  width: 55%;
+  height: auto;
+  color: black;
+  margin: 2% 0% 2% 2%;
+  padding: 2% 0% 2% 2%;
+  font-size: 1.2em;
+  border-radius: 10px;
 }
 
 #submitBtn {
