@@ -79,10 +79,7 @@ function initialize() {
     $(".addyForm").fadeIn("slow");
     $(".instructPanel").fadeIn("slow");
     $(".appName").css("margin-bottom", "0%");
-
-
   });
-  
   google.maps.event.addListener(document.getElementsByClassName("addyForm"), "submit", submitAddyBox());
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
