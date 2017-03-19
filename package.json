@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "node-sass": "^4.5.0",
     "sass": "^0.5.0"
   },
