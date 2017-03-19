@@ -16,7 +16,7 @@
 }
 
 .mainWrap {
-	margin: 0 auto;
+  margin: 0 auto;
 }
 
 .addyForm {
@@ -35,7 +35,7 @@
 }
 
 span {
-	font-size: 20px;
+  font-size: 20px;
 }
 
 #addyBox {
@@ -49,32 +49,29 @@ span {
 }
 
 #submitBtn {
-	margin-left: 10px;
-	background-color: navy;
-	border-radius: 10px;
+  margin-left: 10px;
+  background-color: navy;
+  border-radius: 10px;
 }
 
 .directionsBox {
   margin-left: 2%;
   height: 58vh;
   width: 18vw;
-	background-color: white;
-	display: inline-block;
-	visibility: hidden;
-	overflow-y: scroll;
-	border-radius: 20px;
+  background-color: white;
+  display: inline-block;
+  visibility: hidden;
+  overflow-y: scroll;
+  border-radius: 20px;
 }
 
 #directionsPanel {
-	background-color: white;
+  background-color: white;
 }
 
 .mainBox {
   width: 60vw;
   height: 58vh;
-  /* margin: 0 auto; */
-  /* margin-top: 2%; */
-  /* margin-bottom: 10px; */
   display: inline-block;
   position: relative;
   color: white;
@@ -86,83 +83,84 @@ span {
 }
 
 .placesList {
-	height: 58vh;
+  height: 58vh;
   width: 18vw;
-	background-color: white;
-	display: inline-block;
-	visibility: hidden;
-	overflow-y: scroll;
-	border-radius: 20px;
+  background-color: white;
+  display: inline-block;
+  visibility: hidden;
+  overflow-y: scroll;
+  border-radius: 20px;
 }
 
 .listItems {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .item {
-/*	border-top: 2px solid grey;
-*/	border-bottom: 2px solid grey;
-	padding-top: 15px;
-	padding-bottom: 10px;
+/*  border-top: 2px solid grey;
+*/  border-bottom: 2px solid grey;
+  padding-top: 15px;
+  padding-bottom: 10px;
 }
 
 body {
-	background-image: url(assets/city-bike.jpg);
-	background-size: cover;
-	background-repeat: no-repeat;
-	height: auto;
-	width: auto;
+  background-image: url(../assets/city-bike.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: auto;
+  width: auto;
 }
 
 .getStarted {
-	margin-top: 50px;
-	position: absolute;
-	height: 90%;
-	width: 90%;
-	z-index: 99999;
+  margin-top: 50px;
+  position: absolute;
+  height: 90%;
+  width: 90%;
+  z-index: 99999;
 }
  #getStartedBtn {
- 	margin: 0 auto;
- 	width: 70%;
- 	opacity: 1;
+  margin: 0 auto;
+  width: 70%;
+  opacity: 1;
  }
 
 #map-canvas {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	z-index: 1;
-	border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  border-radius: 20px;
 }
 
 .placesMarker {
-	height: 20px;
-	width: auto;
+  height: 20px;
+  width: auto;
 }
 
 .instructPanel {
-	height: 70px;
-	width: 600px;
-	background-color: #28d3c5;
-	margin: 0 auto;
-	padding-top: 10px;
-	text-align: center;
-	font-family: Impact;
-	font-variant: small-caps;
-	color: white;
-	font-size: 17pt;
-	border-radius: 15px;
-	display: block;
-/*	visibility: hidden;*/
-	display: none;
+  height: 70px;
+  width: 600px;
+  background-color: #28d3c5;
+  margin: 0 auto;
+  padding-top: 10px;
+  text-align: center;
+  font-family: Impact;
+  font-variant: small-caps;
+  color: white;
+  font-size: 17pt;
+  border-radius: 15px;
+  display: block;
+  display: none;
 }
 
 img {
-	display: inline-block;
+  display: inline-block;
 }
 
-.instructPanel div {
-	display: inline-block;
+.instructPanel {
+  div {
+    display: inline-block;
+  }
 }
 
 .directionsBox::-webkit-scrollbar { 
